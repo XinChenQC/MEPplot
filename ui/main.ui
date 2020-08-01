@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>683</width>
+    <width>697</width>
     <height>584</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
      <x>10</x>
      <y>10</y>
      <width>411</width>
-     <height>411</height>
+     <height>391</height>
     </rect>
    </property>
   </widget>
@@ -40,9 +40,14 @@
     <rect>
      <x>430</x>
      <y>10</y>
-     <width>71</width>
-     <height>21</height>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Open...</string>
@@ -53,38 +58,129 @@
     <rect>
      <x>430</x>
      <y>40</y>
-     <width>241</width>
+     <width>251</width>
      <height>121</height>
     </rect>
    </property>
    <property name="title">
     <string>Plot setting</string>
    </property>
-   <widget class="QPushButton" name="Pgen">
+   <widget class="QPushButton" name="Rgen">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>90</y>
-      <width>75</width>
-      <height>23</height>
+      <x>4</x>
+      <y>80</y>
+      <width>111</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Regenerate</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="Rset">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>80</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Reset plot</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Level   </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="Level"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string> Cmap</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmap">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>bwr</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>jet</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rainbow</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>221</width>
+      <y>10</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Max. V</string>
        </property>
@@ -95,6 +191,11 @@
      </item>
      <item>
       <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Min. V</string>
        </property>
@@ -105,39 +206,14 @@
      </item>
     </layout>
    </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>60</y>
-      <width>101</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>bwr</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>jet</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>rainbow</string>
-     </property>
-    </item>
-   </widget>
   </widget>
   <widget class="QGroupBox" name="MEPBox">
    <property name="geometry">
     <rect>
      <x>430</x>
      <y>160</y>
-     <width>241</width>
-     <height>231</height>
+     <width>251</width>
+     <height>241</height>
     </rect>
    </property>
    <property name="title">
@@ -148,18 +224,18 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>430</y>
-     <width>661</width>
-     <height>151</height>
+     <y>410</y>
+     <width>671</width>
+     <height>171</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>530</x>
      <y>10</y>
-     <width>151</width>
+     <width>141</width>
      <height>21</height>
     </rect>
    </property>

@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.interpolate import griddata
 import sys
 # PyQt5 
 from PyQt5.uic import loadUi
@@ -16,7 +17,7 @@ from matplotlib.figure import Figure
 
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
+        fig = Figure(figsize=(width, height), dpi=dpi, constrained_layout=True)
         self.axes = fig.add_subplot(111)
         super(MplCanvas, self).__init__(fig)
 
@@ -24,15 +25,21 @@ class dataTempl():
     PESdata = None 
     MaxValueInit = 1
     MinValueInit = 0
+    xi = None
+    yi = None
+    zi = None
 
 class MainWindow(QWidget):
+    cb = None
     def __init__(self):
         super(MainWindow,self).__init__()       
         loadUi("ui/main.ui",self)
-        ## DataInitial
+        ## PES and MEP Data Initial
         self.interData = dataTempl()
-         # Initial Click events
+
+        ## Initial Click events
         self.Click()
+
         ## Canvas define
         self.Canvas = MplCanvas(self.plotWindows, width=5, height=4, dpi=100)
         #toolbar = NavigationToolbar(self.Canvas,self.plotWindows)
@@ -43,10 +50,13 @@ class MainWindow(QWidget):
 
     def Click(self):
         self.openB.clicked.connect(self.readFile)
-        self.Pgen.clicked.connect(self.plotGuessDot)
+        self.Rgen.clicked.connect(self.plotReGen)
+        self.Rset.clicked.connect(self.plotReset)
+
 
     def readFile(self):
         fileName = QFileDialog.getOpenFileName(self, "Save", "./","File (*.dat *.txt)")
+        if (len(fileName[0]) == 0): return
         self.outBrowser.append("Potential energy surface file selected:   "+fileName[0])
         self.label.setText("File loaded")
         self.PESfile = fileName
@@ -60,26 +70,71 @@ class MainWindow(QWidget):
         self.interData.MinValueInit = minD
         self.Vmax.setText(str(round(maxD,3)))
         self.Vmin.setText(str(round(minD,3)))
+        self.Level.setText(str(24))
         self.plotPES_int()
         
     # Initial plot
     def plotPES_int(self):
-        self.Canvas.axes.tricontour(
-                                 self.interData.PESdata[:,0], 
-                                 self.interData.PESdata[:,1],
-                                 self.interData.PESdata[:,2],levels=24,linewidths=0.5,colors='k')
+        
+        if(self.cb != None ): self.cb.remove()
+        self.Canvas.axes.clear()
+        X_max = np.max(self.interData.PESdata[:,0])
+        X_min = np.min(self.interData.PESdata[:,0])
+        Y_max = np.max(self.interData.PESdata[:,1])
+        Y_min = np.min(self.interData.PESdata[:,1])
+        self.interData.xi = np.linspace(X_min,X_max,100)
+        self.interData.yi = np.linspace(Y_min,Y_max,100)
+        self.interData.zi = griddata(
+                        (self.interData.PESdata[:,0],self.interData.PESdata[:,1]),
+                         self.interData.PESdata[:,2],
+                        (self.interData.xi[None,:],self.interData.yi[:,None]),method='cubic')
 
-        cf = self.Canvas.axes.tricontourf(
-                                 self.interData.PESdata[:,0], 
-                                 self.interData.PESdata[:,1],
-                                 self.interData.PESdata[:,2],levels=140,cmap="bwr")
+        self.Canvas.axes.contour(self.interData.xi,self.interData.yi,self.interData.zi,
+                                levels=24,linewidths=0.5,colors='k')
+
+        cf = self.Canvas.axes.contourf(self.interData.xi,self.interData.yi,self.interData.zi,
+                                    levels=140,cmap="bwr")
         # Get color bar
-        self.cb = self.Canvas.axes.figure.colorbar(cf)
+        self.cb = self.Canvas.axes.figure.colorbar(mappable=cf)
         self.Canvas.draw()
-    # Plot guess dot on Canvas
+
+    # Regenerate plot
+    def plotReGen(self):
+        self.cb.remove()
+        self.Canvas.axes.clear()
+        self.Canvas.draw()
+
+        maxV = float(self.Vmax.text())
+        minV = float(self.Vmin.text())
+        level = int(self.Level.text())
+        Cmap = self.cmap.currentText()
+        maskLine = []
+
+        self.Canvas.axes.contour(
+                self.interData.xi, 
+                self.interData.yi,
+                self.interData.zi,
+                vmax=maxV,vmin=minV,
+                linewidths=0.5,colors='k',levels=np.linspace(minV,maxV,level))
+
+        cf = self.Canvas.axes.contourf(
+                self.interData.xi, 
+                self.interData.yi,
+                self.interData.zi,
+                vmax=maxV,vmin=minV,
+                levels=np.linspace(minV,maxV,140),cmap=Cmap)
+        self.cb = self.Canvas.axes.figure.colorbar(mappable=cf,boundaries=np.linspace(minV,maxV,140))
+        self.Canvas.draw()
+
+    # Plot Guess dot on Canvas
     def plotGuessDot(self):
         self.cb.remove()  
         self.Canvas.axes.plot([0], [1],'o',color='k')
+        self.Canvas.draw()
+    
+    def plotReset(self):
+        self.Canvas.axes.clear()
+        #self.cb.remove() 
         self.Canvas.draw()
 
 
