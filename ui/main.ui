@@ -293,7 +293,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="show">
+      <widget class="QPushButton" name="showResult">
        <property name="text">
         <string>Show Results</string>
        </property>

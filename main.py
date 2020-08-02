@@ -24,6 +24,10 @@ zi = 0                     # interpolated Grid data Z 100 [Grid_data]
 Guess_beads = 0            # initGuess Beads [2D array, 2*N_guessbeads]
 FuncInter = None           # interpolate function
 
+stepsize=1                 # Optimize stepsize
+max_iter=60                # maximum interation
+nbeads=20                  #
+
 
 ## Matplotlib Canvas initialization
 class MplCanvas(FigureCanvasQTAgg):
@@ -154,11 +158,14 @@ class MainWindow(QWidget):
 
     # Plot Guess dot on Canvas
     def plotGuessDot(self):
-        global Guess_beads
+        global Guess_beads,stepsize,max_iter,nbeads
         self.guessb.show()
         self.Nbeads.setText(str(20))
 
-        (MaxValueInit-MinValueInit)/30.0
+        stepsize = (MaxValueInit-MinValueInit)/30.0
+        max_iter = 60
+        nbeads = 20
+
         self.Stepsize.setText(str(round((MaxValueInit-MinValueInit)/30.0,3)))
         self.Maxiter.setText(str(60))
         #self.cb.remove()  
