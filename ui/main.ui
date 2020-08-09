@@ -226,7 +226,7 @@
      <string>Guess beads input</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label2">
+   <widget class="QLabel" name="label2   ">
     <property name="geometry">
      <rect>
       <x>120</x>
