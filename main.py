@@ -1,7 +1,8 @@
 import numpy as np
-from scipy.interpolate import griddata,interp2d
+from scipy.interpolate import griddata,interp2d,SmoothBivariateSpline,CloughTocher2DInterpolator
 import sys
 from io import StringIO
+import time
 # PyQt5 
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication,QWidget,QGroupBox,QLabel
@@ -14,21 +15,28 @@ matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
+from Calc import *
 ## Global PES and MEP variables
 PESdata = 0                # Original PES data provided by User [2D array, 3*N_points]
 MaxValueInit = 1.0         # Maximum value of PES 
 MinValueInit = 0.0         # Minimum value of PES 
-xi = 0                     # interpolated Grid data X 100 [Grid_data]
-yi = 0                     # interpolated Grid data Y 100 [Grid_data]
-zi = 0                     # interpolated Grid data Z 100 [Grid_data]
+xi = 0                     # Initial interpolated Grid data X 100 [Grid_data]
+yi = 0                     # Initial interpolated Grid data Y 100 [Grid_data]
+zi = 0                     # Initial interpolated Grid data Z 100 [Grid_data]
 Guess_beads = 0            # initGuess Beads [2D array, 2*N_guessbeads]
-FuncInter = None           # interpolate function
 
-stepsize=1                 # Optimize stepsize
+stepsize=1.00                 # Optimize stepsize
 max_iter=60                # maximum interation
-nbeads=20                  #
+nbeads=20                  # Number of beads
 
+regul_scale = [[0,1],[0,1]] # regularization factors for X and Y.
+xi_r = 0                     # Regularized interpolated Grid data X 100 [Grid_data]
+yi_r = 0                     # Regularized interpolated Grid data Y 100 [Grid_data]
+Guess_beads_r  = 0           # Regularized Beads [2D array, 2*N_guessbeads]
 
+PES_f = None                     # Fitted function for PES
+
+beads = None
 ## Matplotlib Canvas initialization
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
@@ -86,6 +94,7 @@ class MainWindow(QWidget):
         self.openB.clicked.connect(self.readFile)
         self.Rgen.clicked.connect(self.plotReGen)
         self.Rset.clicked.connect(self.plotReset)
+        self.run.clicked.connect(self.runMEPsearch)
         self.guessinp.clicked.connect(self.plotGuessDot)
 
     def readFile(self):
@@ -121,8 +130,7 @@ class MainWindow(QWidget):
         zi = griddata((PESdata[:,0],PESdata[:,1]),PESdata[:,2],
                         (xi[None,:],yi[:,None]),method='cubic')
 
-        ## Interpolate Griddata to function
-        FuncInter = interp2d(xi,yi,zi,kind='cubic') 
+
         self.Canvas.axes.contour(xi,yi,zi,
                                 levels=24,linewidths=0.5,colors='k')
 
@@ -136,26 +144,20 @@ class MainWindow(QWidget):
     def plotReGen(self):
         global PESdata,MaxValueInit,MinValueInit,xi,yi,zi
         self.cb.remove()
-        print(self.cb)
         self.Canvas.axes.clear()
         self.Canvas.draw()
-<<<<<<< HEAD
         try:
             maxV = float(self.Vmax.text())
             minV = float(self.Vmin.text())
             level = int(self.Level.text())
         except:
-            self.cb = self.Canvas.axes.figure.colorbar(mappable=cf,boundaries=np.linspace(0,1,140))
-            print("wrong input format")
-            return
-=======
-
-        maxV = float(self.Vmax.text())
-        minV = float(self.Vmin.text())
-        level = int(self.Level.text())
->>>>>>> parent of 677beec... add exception
+            maxV = MaxValueInit
+            minV = MinValueInit
+            level = 12
+            self.Vmax.setText(str(round(MaxValueInit,3)))
+            self.Vmin.setText(str(round(MinValueInit,3)))
+            self.Level.setText(str(12))
         Cmap = self.cmap.currentText()
-        maskLine = []
 
         self.Canvas.axes.contour(
                 xi,yi,zi,vmax=maxV,vmin=minV,
@@ -174,11 +176,11 @@ class MainWindow(QWidget):
         self.guessb.show()
         self.Nbeads.setText(str(20))
 
-        stepsize = (MaxValueInit-MinValueInit)/30.0
+        stepsize = 3.0/((MaxValueInit-MinValueInit))
         max_iter = 60
         nbeads = 20
 
-        self.Stepsize.setText(str(round((MaxValueInit-MinValueInit)/30.0,3)))
+        self.Stepsize.setText(str(round(stepsize,3)))
         self.Maxiter.setText(str(60))
         #self.cb.remove()  
 
@@ -186,6 +188,53 @@ class MainWindow(QWidget):
         self.Canvas.axes.clear()
         #self.cb.remove() 
         self.Canvas.draw()
+
+    def runMEPsearch(self):
+        global Guess_beads,stepsize,max_iter,nbeads,regul_scale,\
+               xi_r,yi_r,Guess_beads_r,PES_f,beads
+        ## Read MEP optimization options. 
+        try:
+            stepsize = float(self.Stepsize.text())
+            max_iter = int(self.Maxiter.text())
+            nbeads = int(self.Nbeads.text())
+        except:
+            stepsize = (MaxValueInit-MinValueInit)/30.0
+            max_iter = 60
+            nbeads = 20
+        ## Regularization data:
+        
+        regul_scale[0][0] = np.amin(PESdata[:,0])
+        regul_scale[0][1] = 5.0/(np.amax(PESdata[:,0]) - np.amin(PESdata[:,0]))
+
+        regul_scale[1][0] = np.amin(PESdata[:,1])
+        regul_scale[1][1] = 5.0/(np.amax(PESdata[:,1]) - np.amin(PESdata[:,1]))
+
+        xi_r = (PESdata[:,0]-regul_scale[0][0])*regul_scale[0][1]
+        yi_r = (PESdata[:,1]-regul_scale[1][0])*regul_scale[1][1]
+
+        Guess_beads_r = Guess_beads
+        Guess_beads_r[:,0] = (Guess_beads[:,0]-regul_scale[0][0])*regul_scale[0][1]
+        Guess_beads_r[:,1] = (Guess_beads[:,1]-regul_scale[1][0])*regul_scale[1][1]
+
+        PES_f  = CloughTocher2DInterpolator(np.column_stack((xi_r,yi_r)),PESdata[:,2])
+        ## 1. Generate string
+        beads = InitBeads(Guess_beads_r,PES_f,nbeads)
+        self.plotReGen()
+        beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
+        line = self.Canvas.axes.plot(beads_tx, beads_ty,'o-',color='k')
+
+        self.Canvas.draw()
+        time.sleep(1)
+        ## 2. optimaztion loop
+        for i in range(max_iter):
+            beads_old = walkdown(beads,stepsize,PES_f)
+            beads = redist(beads_old,PES_f)
+  
+        beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
+        line = self.Canvas.axes.plot(beads_tx, beads_ty,'o-',color='r')
+        self.Canvas.draw()
+        ## RecoverData
+
 
 
 app = QApplication(sys.argv)
