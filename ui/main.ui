@@ -216,6 +216,12 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <kerning>false</kerning>
+     </font>
+    </property>
     <property name="text">
      <string>Guess beads input</string>
     </property>
