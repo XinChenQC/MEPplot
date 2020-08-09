@@ -101,6 +101,7 @@ class MainWindow(QWidget):
     # Regenerate plot
     def plotReGen(self):
         self.cb.remove()
+        print(self.cb)
         self.Canvas.axes.clear()
         self.Canvas.draw()
         try:
@@ -108,6 +109,7 @@ class MainWindow(QWidget):
             minV = float(self.Vmin.text())
             level = int(self.Level.text())
         except:
+            self.cb = self.Canvas.axes.figure.colorbar(mappable=cf,boundaries=np.linspace(0,1,140))
             print("wrong input format")
             return
         Cmap = self.cmap.currentText()
