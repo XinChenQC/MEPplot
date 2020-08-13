@@ -46,7 +46,7 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>8</pointsize>
+     <pixelsize>8</pixelsize>
     </font>
    </property>
    <property name="text">
@@ -76,7 +76,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>8</pointsize>
+      <pixelsize>8</pixelsize>
      </font>
     </property>
     <property name="text">
@@ -94,7 +94,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>8</pointsize>
+      <pixelsize>8</pixelsize>
      </font>
     </property>
     <property name="text">
@@ -115,7 +115,7 @@
       <widget class="QLabel" name="label_4">
        <property name="font">
         <font>
-         <pointsize>8</pointsize>
+         <pixelsize>8</pixelsize>
         </font>
        </property>
        <property name="text">
@@ -127,7 +127,7 @@
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
-         <pointsize>8</pointsize>
+         <pixelsize>8</pixelsize>
         </font>
        </property>
        <property name="text">
@@ -139,7 +139,7 @@
       <widget class="QLabel" name="label_3">
        <property name="font">
         <font>
-         <pointsize>8</pointsize>
+         <pixelsize>8</pixelsize>
         </font>
        </property>
        <property name="text">
@@ -151,7 +151,7 @@
       <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
-         <pointsize>8</pointsize>
+         <pixelsize>8</pixelsize>
         </font>
        </property>
        <property name="text">
@@ -172,7 +172,7 @@
       <widget class="QComboBox" name="cmap">
        <property name="font">
         <font>
-         <pointsize>8</pointsize>
+         <pixelsize>8</pixelsize>
         </font>
        </property>
        <item>
@@ -218,7 +218,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>8</pointsize>
+      <pixelsize>8</pixelsize>
       <kerning>false</kerning>
      </font>
     </property>

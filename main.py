@@ -3,6 +3,7 @@ from scipy.interpolate import griddata,interp2d,SmoothBivariateSpline,CloughToch
 import sys
 from io import StringIO
 import time
+from copy import deepcopy
 # PyQt5 
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication,QWidget,QGroupBox,QLabel
@@ -14,6 +15,8 @@ import matplotlib
 matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
+#import matplotlib.pyplot as plt
+
 
 from Calc import *
 ## Global PES and MEP variables
@@ -40,18 +43,28 @@ beads = None
 ## Matplotlib Canvas initialization
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi, constrained_layout=True)
-        self.axes = fig.add_subplot(111)
-        super(MplCanvas, self).__init__(fig)
+        self.fig = Figure(figsize=(width, height), dpi=dpi, constrained_layout=True)
+        #plt.ion()
+        self.axes = self.fig.add_subplot(1,1,1)
+        super(MplCanvas, self).__init__(self.fig)
+    def draw_beads(self,beads_x, beads_y):
+        line = self.axes.plot(beads_x, beads_y,'o-',color='r',markersize=1.3,lw=1)
+        #plt.pause(0.1)
+        self.fig.canvas.flush_events()
+        self.draw()
+        line.pop(0).remove()
+
 ## Guess beads input Class
+
 class GuessBox(QWidget):
-    def __init__(self,CanvasIn,LableIn):
+    def __init__(self,CanvasIn,LableIn,BrowserIn):
         super(GuessBox,self).__init__()       
         loadUi("ui/GuessDia.ui",self)
         ## Initial Click events
         self.Click()
         self.Canvas = CanvasIn
         self.label2 = LableIn
+        self.browser = BrowserIn
 
     def Click(self):
         self.ok.clicked.connect(self.okReadin)
@@ -60,11 +73,20 @@ class GuessBox(QWidget):
         global Guess_beads
         text = self.data.toPlainText()
         f = StringIO(text)
-        Guess_beads = np.loadtxt(f)
-        if (len(Guess_beads) == 0): return
-        self.Canvas.axes.plot(Guess_beads[:,0],Guess_beads[:,1],'o-',color='k')
-        self.Canvas.draw()
-        self.label2.setText("Guess finished")
+        try:
+            Guess_beads = np.loadtxt(f)
+            if (len(Guess_beads) == 0):
+                self.browser.append("No beads")
+                return
+            if Guess_beads.ndim == 1: 
+                self.browser.append("At least 2 guess beads")
+                return 
+            self.Canvas.axes.plot(Guess_beads[:,0],Guess_beads[:,1],'o-',color='k')
+            self.Canvas.draw()
+            self.label2.setText("Guess finished")
+        except:
+            self.browser.append("Guess beads input format error")
+
         self.close()
     def resetData(self):
         self.data.clear()
@@ -80,9 +102,8 @@ class MainWindow(QWidget):
 
         ## Canvas define
         self.Canvas = MplCanvas(self.plotWindows, width=6, height=6, dpi=100)
-        
         ## Initial Guess InputBox
-        self.guessb = GuessBox(self.Canvas,self.label2)
+        self.guessb = GuessBox(self.Canvas,self.label2,self.outBrowser)
 
         #toolbar = NavigationToolbar(self.Canvas,self.plotWindows)
         layout = QVBoxLayout()
@@ -173,15 +194,17 @@ class MainWindow(QWidget):
     # Plot Guess dot on Canvas
     def plotGuessDot(self):
         global Guess_beads,stepsize,max_iter,nbeads
+        
+        self.plotReGen()
         self.guessb.show()
         self.Nbeads.setText(str(20))
-
+        
         stepsize = 3.0/((MaxValueInit-MinValueInit))
         max_iter = 60
         nbeads = 20
 
         self.Stepsize.setText(str(round(stepsize,3)))
-        self.Maxiter.setText(str(60))
+        self.Maxiter.setText(str(80))
         #self.cb.remove()  
 
     def plotReset(self):
@@ -198,9 +221,12 @@ class MainWindow(QWidget):
             max_iter = int(self.Maxiter.text())
             nbeads = int(self.Nbeads.text())
         except:
-            stepsize = (MaxValueInit-MinValueInit)/30.0
-            max_iter = 60
+            stepsize = 3.0/((MaxValueInit-MinValueInit))
+            max_iter = 80
             nbeads = 20
+            self.Stepsize.setText(str(round(stepsize,3)))
+            self.Maxiter.setText(str(max_iter))
+            self.Nbeads.setText(str(80))
         ## Regularization data:
         
         regul_scale[0][0] = np.amin(PESdata[:,0])
@@ -212,7 +238,7 @@ class MainWindow(QWidget):
         xi_r = (PESdata[:,0]-regul_scale[0][0])*regul_scale[0][1]
         yi_r = (PESdata[:,1]-regul_scale[1][0])*regul_scale[1][1]
 
-        Guess_beads_r = Guess_beads
+        Guess_beads_r = deepcopy(Guess_beads)
         Guess_beads_r[:,0] = (Guess_beads[:,0]-regul_scale[0][0])*regul_scale[0][1]
         Guess_beads_r[:,1] = (Guess_beads[:,1]-regul_scale[1][0])*regul_scale[1][1]
 
@@ -221,21 +247,38 @@ class MainWindow(QWidget):
         beads = InitBeads(Guess_beads_r,PES_f,nbeads)
         self.plotReGen()
         beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
-        line = self.Canvas.axes.plot(beads_tx, beads_ty,'o-',color='k')
-
+        line = self.Canvas.axes.plot(beads_tx, beads_ty,'o-',color='k',markersize=1)
+        
         self.Canvas.draw()
-        time.sleep(1)
+        line.pop(0).remove()
         ## 2. optimaztion loop
+        beads_old = deepcopy(beads)
+        diff = 1
         for i in range(max_iter):
-            beads_old = walkdown(beads,stepsize,PES_f)
-            beads = redist(beads_old,PES_f)
-  
+
+            if (i == 1 and diff < 0.5*10**-3  ): stepsize =stepsize*100
+            #if (i == 1 and diff < 0.04 and diff > 0.004): stepsize =stepsize*100
+            if (i == 45 and diff > 0.1 ): stepsize =stepsize*0.1
+            if (i == 50 and diff > 0.05 ): stepsize =stepsize*0.1
+            if (i > 55 and i < 58 and diff > 0.02 ): stepsize =stepsize*0.1
+            #if (i > 65 and i < 68 and diff > 0.005 ): stepsize =stepsize*0.5
+            beads,scale_step = walkdown(beads,stepsize,PES_f)
+            beads = redist(beads,PES_f)
+            diff = calcDiff(beads,beads_old)
+            stepsize =stepsize*scale_step
+            print("iteration number:  ",i,"Diff:  ",diff,"  step: ",stepsize)
+            if(diff<0.5*10**-3 and i >10): break
+
+            beads_old = deepcopy(beads)
+            beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
+            #line = self.Canvas.axes.plot(beads_tx, beads_ty,'o-',color='r',markersize=1,lw=0.5)
+            self.Canvas.draw_beads(beads_tx, beads_ty)
+            time.sleep(0.2)
+            #self.Canvas.draw()
         beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
-        line = self.Canvas.axes.plot(beads_tx, beads_ty,'o-',color='r')
+        self.Canvas.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.5)
         self.Canvas.draw()
         ## RecoverData
-
-
 
 app = QApplication(sys.argv)
 demo1 = MainWindow()

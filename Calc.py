@@ -10,6 +10,25 @@ def InitBeads(Guess,f,nBeads):
     nGuess = len(Guess)
     ds = np.linspace(0,1,nGuess)
     ds[0] = 0
+
+    if (np.max(Guess[:,0]) > 5):
+        for bead in Guess:
+            if bead[0] > 5:
+                bead[0] = 4.0
+    if (np.max(Guess[:,1]) > 5):
+        for bead in Guess:
+            if bead[1] > 5:
+                bead[1] = 4.0
+    if (np.min(Guess[:,0]) < 0):
+        for bead in Guess:
+            if bead[0] < 0:
+                bead[0] = 1.0
+
+    if (np.min(Guess[:,1]) < 0):
+        for bead in Guess:
+            if bead[1] < 0:
+                bead[1] = 1.0
+
     for i in range(1,nGuess):
         ds[i] = ((Guess[i][0]-Guess[i-1][0])**2+(Guess[i][1]-Guess[i-1][1])**2)**0.5
     
@@ -52,13 +71,46 @@ def grad(beads,f):
     grad_x = (f(beads[:,0]-dx,beads[:,1])-beads[:,2])/dx
     grad_y = (f(beads[:,0],beads[:,1]-dy)-beads[:,2])/dy
     return grad_x,grad_y
+
 def walkdown(beads,step,f):
     nbeads = len(beads)
     gradientX, gradientY =  grad(beads,f)
-    beads[:,0] = beads[:,0] + gradientX*step
-    beads[:,1] = beads[:,1] + gradientY*step
+    factorX = 1.0
+    factorY = 1.0
+    if (max(gradientX*step) > 0.2): factorX = 0.2/(max(gradientX*step))
+    if (max(gradientY*step) > 0.2): factorY = 0.2/(max(gradientY*step))
+    print (factorX,factorY)
+    beads[:,0] = beads[:,0] + gradientX*step*factorX
+    beads[:,1] = beads[:,1] + gradientY*step*factorY
+    if (np.max(beads[:,0]) > 5):
+        for bead in beads:
+            if bead[0] > 5:
+                bead[0] = 4.0
+    if (np.max(beads[:,1]) > 5):
+        for bead in beads:
+            if bead[1] > 5:
+                bead[1] = 4.0
+    if (np.min(beads[:,0]) < 0):
+        for bead in beads:
+            if bead[0] < 0:
+                bead[0] = 1.0
+
+    if (np.min(beads[:,1]) < 0):
+        for bead in beads:
+            if bead[1] < 0:
+                bead[1] = 1.0
+
     beads[:,2] = f(beads[:,0],beads[:,1])
-    return beads
+    scale = 1
+    if (factorX < 1 or factorY < 1): scale = 0.9
+    if (factorX < 0.5 or factorY < 0.5): scale = 0.7
+    if (factorX < 0.1 or factorY < 0.1): scale = 0.3
+    if (factorX < 0.01 or factorY < 0.01): scale = 0.1
+    if (factorX < 0.001 or factorY < 0.001): scale = 0.01
+    if (factorX < 0.0001 or factorY < 0.0001 ): scale = 0.001
+    if (factorX < 0.00001 or factorY < 0.00001) : scale = 0.0001
+
+    return beads,scale
 
 def redist(beads,f):
     nbeads = len(beads)
@@ -97,5 +149,10 @@ def redist(beads,f):
     Z_new = f(X_new,Y_new)
     S_new = np.column_stack((X_new,Y_new))
 
-	
     return np.column_stack((S_new,Z_new))
+
+def calcDiff(beads,beads2):
+    nbeads = len(beads)
+    Sum = np.sum((beads[:,0]-beads2[:,0])**2+(beads[:,1]-beads2[:,1])**2)/nbeads
+    diff = np.sqrt(Sum)
+    return diff
