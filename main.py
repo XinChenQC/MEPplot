@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.interpolate import griddata,interp2d,SmoothBivariateSpline,CloughTocher2DInterpolator
 import sys
+from os import environ
 from io import StringIO
 import time
 from copy import deepcopy
@@ -9,7 +10,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication,QWidget,QGroupBox,QLabel
 from PyQt5.QtWidgets import QPushButton,QTextBrowser,QFileDialog
 from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtCore import QFile
+from PyQt5.QtCore import QFile,Qt
 # matplotlib
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -123,6 +124,7 @@ class MainWindow(QWidget):
         fileName = QFileDialog.getOpenFileName(self, "Save", "./","File (*.dat *.txt)")
         if (len(fileName[0]) == 0): return
         self.outBrowser.append("Potential energy surface file selected:   "+fileName[0])
+
         self.label.setText("File loaded")
         self.PESfile = fileName
         PESfile = open(fileName[0],'r')
@@ -132,6 +134,17 @@ class MainWindow(QWidget):
         minD = np.min(PESdata[:,2])
         MaxValueInit = maxD
         MinValueInit = minD
+
+        self.outBrowser.append(" \n==== Information of the surface ====")
+        self.outBrowser.append(" Xrange:             "+str(round(np.min(PESdata[:,0]),4))\
+                                           +" to "+str(round(np.max(PESdata[:,0]),4)))
+
+        self.outBrowser.append(" Yrange:             "+str(round(np.min(PESdata[:,1]),4))\
+                                           +" to "+str(round(np.max(PESdata[:,1]),4)))
+        self.outBrowser.append(" Maximum Value:  "+str(round(maxD,4)))
+        self.outBrowser.append(" Minimum Value:  "+str(round(minD,4)))
+        self.outBrowser.append(" ========================")
+
         self.Vmax.setText(str(round(maxD,3)))
         self.Vmin.setText(str(round(minD,3)))
         self.Level.setText(str(24))
@@ -228,7 +241,7 @@ class MainWindow(QWidget):
             self.Maxiter.setText(str(max_iter))
             self.Nbeads.setText(str(80))
         ## Regularization data:
-        
+        self.outBrowser.append(" ================= \n Optimization start\n ================= ")
         regul_scale[0][0] = np.amin(PESdata[:,0])
         regul_scale[0][1] = 5.0/(np.amax(PESdata[:,0]) - np.amin(PESdata[:,0]))
 
@@ -254,8 +267,8 @@ class MainWindow(QWidget):
         ## 2. optimaztion loop
         beads_old = deepcopy(beads)
         diff = 1
+        Conv_flag = 0
         for i in range(max_iter):
-
             if (i == 1 and diff < 0.5*10**-3  ): stepsize =stepsize*100
             #if (i == 1 and diff < 0.04 and diff > 0.004): stepsize =stepsize*100
             if (i == 45 and diff > 0.1 ): stepsize =stepsize*0.1
@@ -266,8 +279,15 @@ class MainWindow(QWidget):
             beads = redist(beads,PES_f)
             diff = calcDiff(beads,beads_old)
             stepsize =stepsize*scale_step
-            print("iteration number:  ",i,"Diff:  ",diff,"  step: ",stepsize)
-            if(diff<0.5*10**-3 and i >10): break
+            if (i%5 == 0):
+                self.outBrowser.append("iteration number:  " \
+                                    +str(i)+"   Diff:  "+ str(round(diff,6))\
+                                    +"  stepsize: "+str(round(stepsize,6)))
+            #print("iteration number:  ",i,"Diff:  ",diff,"  step: ",stepsize)
+            if(diff<0.5*10**-3 and i >10):
+                self.outBrowser.append(" ================= \n Converged \n ================= ")
+                Conv_flag = 1
+                break
 
             beads_old = deepcopy(beads)
             beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
@@ -275,10 +295,13 @@ class MainWindow(QWidget):
             self.Canvas.draw_beads(beads_tx, beads_ty)
             time.sleep(0.2)
             #self.Canvas.draw()
+        if (Conv_flag ==0 ): 
+            self.outBrowser.append(" ================= \n Converge Failed !\n ================= ")
         beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
-        self.Canvas.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.5)
+        self.Canvas.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.8)
         self.Canvas.draw()
         ## RecoverData
+
 
 app = QApplication(sys.argv)
 demo1 = MainWindow()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
-    <height>553</height>
+    <width>800</width>
+    <height>554</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -25,317 +25,330 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <widget class="QWidget" name="plotWindows" native="true">
+  <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>461</width>
-     <height>371</height>
+     <width>741</width>
+     <height>541</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QPushButton" name="openB">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>10</y>
-     <width>91</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pixelsize>8</pixelsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Open...</string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="plotBox">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>30</y>
-     <width>191</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Plot setting</string>
-   </property>
-   <widget class="QPushButton" name="Rgen">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>120</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pixelsize>8</pixelsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Regenerate</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Rset">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>120</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pixelsize>8</pixelsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Reset plot</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="gridLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>171</width>
-      <height>100</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <pixelsize>8</pixelsize>
-        </font>
-       </property>
-       <property name="text">
-        <string> Cmap</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <pixelsize>8</pixelsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Max. V</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pixelsize>8</pixelsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Min. V</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="font">
-        <font>
-         <pixelsize>8</pixelsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Level   </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="Vmax"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="Vmin"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="Level"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="cmap">
-       <property name="font">
-        <font>
-         <pixelsize>8</pixelsize>
-        </font>
-       </property>
-       <item>
-        <property name="text">
-         <string>bwr</string>
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,4">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="6,3">
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="plotWindows" native="true">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>jet</string>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>rainbow</string>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,8,8">
+        <property name="spacing">
+         <number>1</number>
         </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="MEPBox">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>180</y>
-     <width>191</width>
-     <height>171</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>MEP searching</string>
-   </property>
-   <widget class="QPushButton" name="guessinp">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>101</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pixelsize>8</pixelsize>
-      <kerning>false</kerning>
-     </font>
-    </property>
-    <property name="text">
-     <string>Guess beads input</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label2">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>71</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>177</width>
-      <height>74</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Number of Beads:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Max. iterations number:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Step size:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="Nbeads"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="Maxiter"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="Stepsize"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>130</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="run">
-       <property name="text">
-        <string>Run</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="showResult">
-       <property name="text">
-        <string>Show Results</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QTextBrowser" name="outBrowser">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>390</y>
-     <width>671</width>
-     <height>151</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>580</x>
-     <y>10</y>
-     <width>81</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="openB">
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Open...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="plotBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>Plot setting</string>
+          </property>
+          <widget class="QWidget" name="gridLayoutWidget_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>231</width>
+             <height>151</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Max. V</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Cmap</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Level   </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Min. V</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="Vmax"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="Vmin"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="Level"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="cmap">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <item>
+               <property name="text">
+                <string>bwr</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>jet</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>rainbow</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QPushButton" name="Rset">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Reset plot</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QPushButton" name="Rgen">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Regenerate</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="MEPBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="title">
+           <string>MEP searching</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="gridLayoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>231</width>
+             <height>151</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Max. iterations:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="Nbeads">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="Stepsize"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Number of Beads:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>Step size:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="Maxiter"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="guessinp">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>6</horstretch>
+                <verstretch>5</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+                <kerning>false</kerning>
+               </font>
+              </property>
+              <property name="text">
+               <string>Guess beads input</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QPushButton" name="run">
+              <property name="text">
+               <string>Run</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QPushButton" name="showResult">
+              <property name="text">
+               <string>Show Results</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTextBrowser" name="outBrowser"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

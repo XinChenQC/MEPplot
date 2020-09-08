@@ -79,7 +79,6 @@ def walkdown(beads,step,f):
     factorY = 1.0
     if (max(gradientX*step) > 0.2): factorX = 0.2/(max(gradientX*step))
     if (max(gradientY*step) > 0.2): factorY = 0.2/(max(gradientY*step))
-    print (factorX,factorY)
     beads[:,0] = beads[:,0] + gradientX*step*factorX
     beads[:,1] = beads[:,1] + gradientY*step*factorY
     if (np.max(beads[:,0]) > 5):
