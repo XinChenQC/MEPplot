@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>554</height>
+    <width>874</width>
+    <height>659</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -29,12 +29,12 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>741</width>
-     <height>541</height>
+     <y>20</y>
+     <width>851</width>
+     <height>631</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,4">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,0">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="6,3">
       <property name="spacing">
@@ -67,6 +67,7 @@
            <widget class="QPushButton" name="openB">
             <property name="font">
              <font>
+              <family>Times New Roman</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -77,11 +78,11 @@
           </item>
           <item>
            <widget class="QLabel" name="label">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>8</pointsize>
+             </font>
             </property>
             <property name="text">
              <string/>
@@ -98,6 +99,11 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+           </font>
+          </property>
           <property name="title">
            <string>Plot setting</string>
           </property>
@@ -107,7 +113,7 @@
              <x>10</x>
              <y>20</y>
              <width>231</width>
-             <height>151</height>
+             <height>156</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
@@ -118,6 +124,7 @@
               </property>
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -130,6 +137,7 @@
              <widget class="QLabel" name="label_4">
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -142,6 +150,7 @@
              <widget class="QLabel" name="label_5">
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -154,6 +163,7 @@
              <widget class="QLabel" name="label_3">
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -175,6 +185,7 @@
              <widget class="QComboBox" name="cmap">
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -199,6 +210,7 @@
              <widget class="QPushButton" name="Rset">
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -211,6 +223,7 @@
              <widget class="QPushButton" name="Rgen">
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
@@ -233,6 +246,7 @@
           </property>
           <property name="font">
            <font>
+            <family>Times New Roman</family>
             <kerning>true</kerning>
            </font>
           </property>
@@ -250,15 +264,21 @@
             <rect>
              <x>10</x>
              <y>20</y>
-             <width>231</width>
-             <height>151</height>
+             <width>242</width>
+             <height>163</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
             <item row="2" column="0">
              <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
               <property name="text">
-               <string>Max. iterations:</string>
+               <string>Max. iter.</string>
               </property>
              </widget>
             </item>
@@ -277,13 +297,25 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_6">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
               <property name="text">
-               <string>Number of Beads:</string>
+               <string>No. of Beads:</string>
               </property>
              </widget>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_8">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
               <property name="text">
                <string>Step size:</string>
               </property>
@@ -302,17 +334,24 @@
               </property>
               <property name="font">
                <font>
+                <family>Times New Roman</family>
                 <pointsize>8</pointsize>
                 <kerning>false</kerning>
                </font>
               </property>
               <property name="text">
-               <string>Guess beads input</string>
+               <string>Guess beads</string>
               </property>
              </widget>
             </item>
             <item row="4" column="0">
              <widget class="QPushButton" name="run">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
               <property name="text">
                <string>Run</string>
               </property>
@@ -320,8 +359,14 @@
             </item>
             <item row="4" column="1">
              <widget class="QPushButton" name="showResult">
+              <property name="font">
+               <font>
+                <family>Times New Roman</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
               <property name="text">
-               <string>Show Results</string>
+               <string>Show</string>
               </property>
              </widget>
             </item>

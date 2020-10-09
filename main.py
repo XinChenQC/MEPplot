@@ -285,7 +285,7 @@ class MainWindow(QWidget):
                                     +"  stepsize: "+str(round(stepsize,6)))
             #print("iteration number:  ",i,"Diff:  ",diff,"  step: ",stepsize)
             if(diff<0.5*10**-3 and i >10):
-                self.outBrowser.append(" ================= \n Converged \n ================= ")
+                self.outBrowser.append("  Converged ! ")
                 Conv_flag = 1
                 break
 
@@ -296,10 +296,14 @@ class MainWindow(QWidget):
             time.sleep(0.2)
             #self.Canvas.draw()
         if (Conv_flag ==0 ): 
-            self.outBrowser.append(" ================= \n Converge Failed !\n ================= ")
+            self.outBrowser.append("  Converge Failed ! ")
+        Guess_beads = deepcopy(beads)
+        Guess_beads[:,0],Guess_beads[:,1] = trans_back(beads[:,0],beads[:,1],regul_scale)
         beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
         self.Canvas.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.8)
         self.Canvas.draw()
+
+        
         ## RecoverData
 
 
