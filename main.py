@@ -41,7 +41,7 @@ Guess_beads_r  = 0           # Regularized Beads [2D array, 2*N_guessbeads]
 PES_f = None                     # Fitted function for PES
 
 beads = None
-## Matplotlib Canvas initialization
+## Matplotlib Canvas initialization main Windows. 
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi, constrained_layout=True)
@@ -55,8 +55,71 @@ class MplCanvas(FigureCanvasQTAgg):
         self.draw()
         line.pop(0).remove()
 
-## Guess beads input Class
+## Matplotlib Canvas initialization Result Windows, plot PES. 
+class MplCanvas2(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        self.fig = Figure(figsize=(width, height), dpi=dpi, constrained_layout=True)
+        #plt.ion()
+        self.axes = self.fig.add_subplot(1,1,1)
+        super(MplCanvas2, self).__init__(self.fig)
 
+## Matplotlib Canvas initialization Result Windows, plot curve. 
+class MplCanvas3(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        self.fig = Figure(figsize=(width, height), dpi=dpi, constrained_layout=True)
+        #plt.ion()
+        self.axes = self.fig.add_subplot(1,1,1)
+        super(MplCanvas3, self).__init__(self.fig)
+
+## Guess beads input Class
+class ResultBox(QWidget):
+    def __init__(self,maxV=MaxValueInit,minV=MinValueInit,level=20,Cmap='bwr'):
+        global xi,yi,zi,nbeads
+        super(ResultBox,self).__init__()       
+        loadUi("ui/Results.ui",self)
+        self.Canvas1 = MplCanvas2(self.PES_result, width=6, height=6, dpi=100)
+        toolbar = NavigationToolbar(self.Canvas1,self.PES_result)
+        layout = QVBoxLayout()
+        layout.addWidget(toolbar)
+        layout.addWidget(self.Canvas1)
+        self.PES_result.setLayout(layout)
+
+
+        self.Canvas2 = MplCanvas3(self.Curv_result, width=6, height=6, dpi=100)
+        toolbar = NavigationToolbar(self.Canvas2,self.Curv_result)
+        layout = QVBoxLayout()
+        layout.addWidget(toolbar)
+        layout.addWidget(self.Canvas2)
+        self.Curv_result.setLayout(layout)
+
+
+##  Plot PES and MEP on left
+        self.Canvas1.axes.contour(
+                xi,yi,zi,vmax=maxV,vmin=minV,
+                linewidths=0.5,colors='k',levels=np.linspace(minV,maxV,level))
+
+        cf = self.Canvas1.axes.contourf(
+                xi,yi,zi,vmax=maxV,vmin=minV,
+                levels=np.linspace(minV,maxV,140),cmap=Cmap)
+
+        self.cb = self.Canvas1.axes.figure.colorbar(mappable=cf,boundaries=np.linspace(minV,maxV,140))
+        beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
+        self.Canvas1.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.8)
+        self.Canvas1.draw()
+
+##  Plot Curve on right
+        
+        Energy = PES_f(beads[:,0],beads[:,1])
+        x = np.linspace(1,len(Energy),len(Energy))
+        print(x)
+        self.Canvas2.axes.plot(x,Energy,'o-',color='black')
+        self.Canvas2.axes.set_xlabel('xlabel')
+        self.Canvas2.axes.set_ylabel('ylabel')
+        self.Canvas2.draw()
+
+        ## Initial Click events
+
+## Guess beads input Class
 class GuessBox(QWidget):
     def __init__(self,CanvasIn,LableIn,BrowserIn):
         super(GuessBox,self).__init__()       
@@ -102,15 +165,15 @@ class MainWindow(QWidget):
         self.Click()
 
         ## Canvas define
-        self.Canvas = MplCanvas(self.plotWindows, width=6, height=6, dpi=100)
-        ## Initial Guess InputBox
-        self.guessb = GuessBox(self.Canvas,self.label2,self.outBrowser)
-
+        self.Canvas = MplCanvas(self.plotWindows, width=6, height=6, dpi=100)        
         #toolbar = NavigationToolbar(self.Canvas,self.plotWindows)
         layout = QVBoxLayout()
         #layout.addWidget(toolbar)
         layout.addWidget(self.Canvas)
         self.plotWindows.setLayout(layout)
+
+        ## Initial Guess InputBox
+        self.guessb = GuessBox(self.Canvas,self.label2,self.outBrowser)
 
     def Click(self):
         self.openB.clicked.connect(self.readFile)
@@ -118,7 +181,7 @@ class MainWindow(QWidget):
         self.Rset.clicked.connect(self.plotReset)
         self.run.clicked.connect(self.runMEPsearch)
         self.guessinp.clicked.connect(self.plotGuessDot)
-
+        self.showResult.clicked.connect(self.showRes)
     def readFile(self):
         global PESdata,MaxValueInit,MinValueInit
         fileName = QFileDialog.getOpenFileName(self, "Save", "./","File (*.dat *.txt)")
@@ -164,7 +227,6 @@ class MainWindow(QWidget):
         zi = griddata((PESdata[:,0],PESdata[:,1]),PESdata[:,2],
                         (xi[None,:],yi[:,None]),method='cubic')
 
-
         self.Canvas.axes.contour(xi,yi,zi,
                                 levels=24,linewidths=0.5,colors='k')
 
@@ -177,6 +239,8 @@ class MainWindow(QWidget):
     # Regenerate plot
     def plotReGen(self):
         global PESdata,MaxValueInit,MinValueInit,xi,yi,zi
+        if (type(PESdata) is int):
+            return
         self.cb.remove()
         self.Canvas.axes.clear()
         self.Canvas.draw()
@@ -220,6 +284,19 @@ class MainWindow(QWidget):
         self.Maxiter.setText(str(80))
         #self.cb.remove()  
 
+    # Show results
+    def showRes(self):
+        if (type(PESdata) is int):
+            self.outBrowser.append("     Error ! No potential energy surface data !")
+            return
+
+        maxV = float(self.Vmax.text())
+        minV = float(self.Vmin.text())
+        level = int(self.Level.text())
+        Cmap = self.cmap.currentText()
+        self.resultb = ResultBox(maxV,minV,level,Cmap)
+        self.resultb.show()
+
     def plotReset(self):
         self.Canvas.axes.clear()
         #self.cb.remove() 
@@ -229,6 +306,14 @@ class MainWindow(QWidget):
         global Guess_beads,stepsize,max_iter,nbeads,regul_scale,\
                xi_r,yi_r,Guess_beads_r,PES_f,beads
         ## Read MEP optimization options. 
+        if (type(PESdata) is int):
+            self.outBrowser.append("     Error ! No potential energy surface data !")
+            return
+
+        if (type(Guess_beads) is int):
+            self.outBrowser.append("     Warnning ! No initial guess beads !")
+            return
+
         try:
             stepsize = float(self.Stepsize.text())
             max_iter = int(self.Maxiter.text())
@@ -240,6 +325,8 @@ class MainWindow(QWidget):
             self.Stepsize.setText(str(round(stepsize,3)))
             self.Maxiter.setText(str(max_iter))
             self.Nbeads.setText(str(80))
+
+
         ## Regularization data:
         self.outBrowser.append(" ================= \n Optimization start\n ================= ")
         regul_scale[0][0] = np.amin(PESdata[:,0])

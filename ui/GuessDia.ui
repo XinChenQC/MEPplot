@@ -6,12 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>180</width>
-    <height>336</height>
+    <width>190</width>
+    <height>340</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>190</width>
+    <height>340</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Guess beads</string>
   </property>
   <widget class="QPushButton" name="ok">
    <property name="geometry">

@@ -6,35 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>874</width>
-    <height>659</height>
+    <width>881</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>641</width>
-    <height>520</height>
+    <width>881</width>
+    <height>753</height>
    </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Times New Roman</family>
+   </font>
   </property>
   <property name="mouseTracking">
    <bool>false</bool>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>MEP Plot</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>851</width>
-     <height>631</height>
+     <width>861</width>
+     <height>721</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,0">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="6,4">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="6,3">
       <property name="spacing">
