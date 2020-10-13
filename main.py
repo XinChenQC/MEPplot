@@ -31,7 +31,7 @@ Guess_beads = 0            # initGuess Beads [2D array, 2*N_guessbeads]
 
 stepsize=1.00                 # Optimize stepsize
 max_iter=60                # maximum interation
-nbeads=20                  # Number of beads
+nbeads=50                  # Number of beads
 
 regul_scale = [[0,1],[0,1]] # regularization factors for X and Y.
 xi_r = 0                     # Regularized interpolated Grid data X 100 [Grid_data]
@@ -93,7 +93,7 @@ class ResultBox(QWidget):
         self.Curv_result.setLayout(layout)
 
 
-##  Plot PES and MEP on left
+        ##  Plot PES and MEP on left
         self.Canvas1.axes.contour(
                 xi,yi,zi,vmax=maxV,vmin=minV,
                 linewidths=0.5,colors='k',levels=np.linspace(minV,maxV,level))
@@ -107,12 +107,13 @@ class ResultBox(QWidget):
         self.Canvas1.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.8)
         self.Canvas1.draw()
 
-##  Plot Curve on right
-        
+        ##  Plot Curve on right        
         Energy = PES_f(beads[:,0],beads[:,1])
         x = np.linspace(1,len(Energy),len(Energy))
-        print(x)
-        self.Canvas2.axes.plot(x,Energy,'o-',color='black')
+        if(len(Energy) < 100): ms =2
+        if(len(Energy) > 100 and len(Energy) < 300): ms =1.5
+        if(len(Energy) > 300 ): ms =1
+        self.Canvas2.axes.plot(x,Energy,'o-',color='black',markersize=ms)
         self.Canvas2.axes.set_xlabel('xlabel')
         self.Canvas2.axes.set_ylabel('ylabel')
         self.Canvas2.draw()
@@ -274,11 +275,11 @@ class MainWindow(QWidget):
         
         self.plotReGen()
         self.guessb.show()
-        self.Nbeads.setText(str(20))
+        self.Nbeads.setText(str(50))
         
         stepsize = 3.0/((MaxValueInit-MinValueInit))
         max_iter = 60
-        nbeads = 20
+        nbeads = 50
 
         self.Stepsize.setText(str(round(stepsize,3)))
         self.Maxiter.setText(str(80))
@@ -288,6 +289,10 @@ class MainWindow(QWidget):
     def showRes(self):
         if (type(PESdata) is int):
             self.outBrowser.append("     Error ! No potential energy surface data !")
+            return
+
+        if (beads is None):
+            self.outBrowser.append("     Error ! No optimized beads")
             return
 
         maxV = float(self.Vmax.text())
@@ -321,10 +326,10 @@ class MainWindow(QWidget):
         except:
             stepsize = 3.0/((MaxValueInit-MinValueInit))
             max_iter = 80
-            nbeads = 20
+            nbeads = 50
             self.Stepsize.setText(str(round(stepsize,3)))
             self.Maxiter.setText(str(max_iter))
-            self.Nbeads.setText(str(80))
+            self.Nbeads.setText(str(50))
 
 
         ## Regularization data:
