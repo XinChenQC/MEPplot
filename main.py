@@ -11,15 +11,20 @@ from PyQt5.QtWidgets import QApplication,QWidget,QGroupBox,QLabel
 from PyQt5.QtWidgets import QPushButton,QTextBrowser,QFileDialog
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtCore import QFile,Qt
+from PyQt5.QtGui import QIcon
 # matplotlib
 import matplotlib
 matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 #import matplotlib.pyplot as plt
-
-
 from Calc import *
+
+
+import ctypes
+myappid = 'mycompany.myproduct.subproduct.version' # arbitrary string
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
 ## Global PES and MEP variables
 PESdata = 0                # Original PES data provided by User [2D array, 3*N_points]
 MaxValueInit = 1.0         # Maximum value of PES 
@@ -92,6 +97,8 @@ class ResultBox(QWidget):
         layout.addWidget(self.Canvas2)
         self.Curv_result.setLayout(layout)
 
+        ## Click to export results.
+        self.exportRes.clicked.connect(self.save_result)
 
         ##  Plot PES and MEP on left
         self.Canvas1.axes.contour(
@@ -113,12 +120,36 @@ class ResultBox(QWidget):
         if(len(Energy) < 100): ms =2
         if(len(Energy) > 100 and len(Energy) < 300): ms =1.5
         if(len(Energy) > 300 ): ms =1
+        ## Prepare beads output file: 
+        self.beadsText = ""
+        for ibead in range(len(Energy)):
+            self.beadsText = self.beadsText+"    "+str(beads_tx[ibead])+"    "+str(beads_ty[ibead])+"    "+str(Energy[ibead])+"  \n"
         self.Canvas2.axes.plot(x,Energy,'o-',color='black',markersize=ms)
         self.Canvas2.axes.set_xlabel('xlabel')
         self.Canvas2.axes.set_ylabel('ylabel')
         self.Canvas2.draw()
 
-        ## Initial Click events
+    def save_result(self):
+        name = QFileDialog.getSaveFileName(self, 'Export beads')
+        if (len(name[0]) == 0): return
+        file = open(name[0],'w')
+        #text = self.beadsText.toPlainText()
+        file.write(self.beadsText)
+        file.close()
+        self.exported.setText("Exported !")
+
+## About box Class
+class AboutBox(QWidget):
+    def __init__(self):
+        global xi,yi,zi,nbeads
+        super(AboutBox,self).__init__()       
+        loadUi("ui/about.ui",self) 
+
+class NavigationToolbarCus(NavigationToolbar):
+    # only display the buttons we need
+    toolitems = [t for t in NavigationToolbar.toolitems if
+                 t[0] in ('Home', 'Pan', 'Zoom', 'Save')]
+
 
 ## Guess beads input Class
 class GuessBox(QWidget):
@@ -167,12 +198,12 @@ class MainWindow(QWidget):
 
         ## Canvas define
         self.Canvas = MplCanvas(self.plotWindows, width=6, height=6, dpi=100)        
-        #toolbar = NavigationToolbar(self.Canvas,self.plotWindows)
+        toolbar = NavigationToolbarCus(self.Canvas,self.plotWindows)
         layout = QVBoxLayout()
-        #layout.addWidget(toolbar)
+        layout.addWidget(toolbar)
         layout.addWidget(self.Canvas)
         self.plotWindows.setLayout(layout)
-
+        self.setWindowIcon(QIcon('ui/Logo.ico'))
         ## Initial Guess InputBox
         self.guessb = GuessBox(self.Canvas,self.label2,self.outBrowser)
 
@@ -183,9 +214,11 @@ class MainWindow(QWidget):
         self.run.clicked.connect(self.runMEPsearch)
         self.guessinp.clicked.connect(self.plotGuessDot)
         self.showResult.clicked.connect(self.showRes)
+        self.about.clicked.connect(self.showAbout)
+
     def readFile(self):
         global PESdata,MaxValueInit,MinValueInit
-        fileName = QFileDialog.getOpenFileName(self, "Save", "./","File (*.dat *.txt)")
+        fileName = QFileDialog.getOpenFileName(self, "Read PES", "./","File (*.dat *.txt)")
         if (len(fileName[0]) == 0): return
         self.outBrowser.append("Potential energy surface file selected:   "+fileName[0])
 
@@ -301,6 +334,11 @@ class MainWindow(QWidget):
         Cmap = self.cmap.currentText()
         self.resultb = ResultBox(maxV,minV,level,Cmap)
         self.resultb.show()
+    # Show about
+
+    def showAbout(self):
+        self.aboutb = AboutBox()
+        self.aboutb.show()
 
     def plotReset(self):
         self.Canvas.axes.clear()
@@ -397,7 +435,6 @@ class MainWindow(QWidget):
 
         
         ## RecoverData
-
 
 app = QApplication(sys.argv)
 demo1 = MainWindow()

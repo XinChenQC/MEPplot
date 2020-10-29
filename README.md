@@ -9,8 +9,6 @@ A GUI program for plotting minimal energy path on potential energy surface.
 
 ## License
 
-----
-
 MEPplot: A GUI program for plotting Minimal energy path on potential energy surface. 
 Copyright (C)  2020 Xin Chen and Weizhi Liu
 
