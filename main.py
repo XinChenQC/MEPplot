@@ -148,7 +148,7 @@ class AboutBox(QWidget):
 class NavigationToolbarCus(NavigationToolbar):
     # only display the buttons we need
     toolitems = [t for t in NavigationToolbar.toolitems if
-                 t[0] in ('Home', 'Pan', 'Zoom', 'Save')]
+                 t[0] in ('Home', 'Pan', 'Zoom')]
 
 
 ## Guess beads input Class

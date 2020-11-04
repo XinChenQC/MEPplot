@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
+    <width>795</width>
     <height>755</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>881</width>
-    <height>753</height>
+    <width>771</width>
+    <height>684</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>890</width>
+    <width>800</width>
     <height>755</height>
    </size>
   </property>
@@ -44,13 +44,13 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>861</width>
+     <width>741</width>
      <height>701</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="6,4">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="7,3">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="6,3">
+     <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="5,3">
       <property name="spacing">
        <number>3</number>
       </property>
@@ -430,7 +430,7 @@
   <widget class="QPushButton" name="about">
    <property name="geometry">
     <rect>
-     <x>800</x>
+     <x>690</x>
      <y>730</y>
      <width>61</width>
      <height>21</height>
@@ -466,6 +466,15 @@
         </color>
        </brush>
       </colorrole>
+      <colorrole role="PlaceholderText">
+       <brush brushstyle="NoBrush">
+        <color alpha="128">
+         <red>0</red>
+         <green>85</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
      </active>
      <inactive>
       <colorrole role="WindowText">
@@ -489,6 +498,15 @@
       <colorrole role="ButtonText">
        <brush brushstyle="SolidPattern">
         <color alpha="255">
+         <red>0</red>
+         <green>85</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="PlaceholderText">
+       <brush brushstyle="NoBrush">
+        <color alpha="128">
          <red>0</red>
          <green>85</green>
          <blue>255</blue>
@@ -524,6 +542,15 @@
         </color>
        </brush>
       </colorrole>
+      <colorrole role="PlaceholderText">
+       <brush brushstyle="NoBrush">
+        <color alpha="128">
+         <red>0</red>
+         <green>85</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
      </disabled>
     </palette>
    </property>
@@ -554,7 +581,7 @@ text-decoration: underline;</string>
   <widget class="QLabel" name="web">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>430</x>
      <y>730</y>
      <width>261</width>
      <height>21</height>
