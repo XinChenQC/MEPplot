@@ -3,9 +3,7 @@
 
 
 
-<img src=".\Readme-figures\R1.png" alt="R1" style="zoom:67%;" />
-
-A GUI program for plotting minimal energy path on potential energy (or free energy) surface.
+A GUI program for plotting minimal energy path on potential energy (or free energy) surface. This program is based on string method. Please refer to this paper (Phys. Rev. B **66**, 052301 – Published 12 August 2002)
 
 ## Download and  Installation
 
