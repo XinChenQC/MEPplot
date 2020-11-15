@@ -48,7 +48,7 @@
      <height>701</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="7,3">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,4">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="5,3">
       <property name="spacing">

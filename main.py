@@ -76,7 +76,7 @@ class MplCanvas3(FigureCanvasQTAgg):
         self.axes = self.fig.add_subplot(1,1,1)
         super(MplCanvas3, self).__init__(self.fig)
 
-## Guess beads input Class
+## Result Class
 class ResultBox(QWidget):
     def __init__(self,maxV=MaxValueInit,minV=MinValueInit,level=20,Cmap='bwr'):
         global xi,yi,zi,nbeads
@@ -256,8 +256,8 @@ class MainWindow(QWidget):
         X_min = np.min(PESdata[:,0])
         Y_max = np.max(PESdata[:,1])
         Y_min = np.min(PESdata[:,1])
-        xi = np.linspace(X_min,X_max,100)
-        yi = np.linspace(Y_min,Y_max,100)
+        xi = np.linspace(X_min,X_max,300)
+        yi = np.linspace(Y_min,Y_max,300)
         zi = griddata((PESdata[:,0],PESdata[:,1]),PESdata[:,2],
                         (xi[None,:],yi[:,None]),method='cubic')
 
