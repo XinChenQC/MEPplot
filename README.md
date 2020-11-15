@@ -43,9 +43,9 @@ Click `Open...` button at up-right corner and select your PES data file. The PES
 <img src=".\Readme-figures\R3.png" alt="R3"  />
 
 * **Max. V**: Maximum value. Values larger than *Max. V* will be screened out. 
-* **Min. V **: Minimum  value. Values smaller than *Max. V* will be screened out. (Don't adjust it usless you know what are you doing!)
+* **Min. V**: Minimum  value. Values smaller than *Max. V* will be screened out. (Don't adjust it usless you know what are you doing!)
 * **Level**: Number of contour lines plotted on PES. 
-* **Cmap **：Colormap styles.
+* **Cmap**：Colormap styles.
 
 Click `Regenrate` button you will see the new PES figure. If you mess the plot setting up, just click `Reset plot`. 
 
