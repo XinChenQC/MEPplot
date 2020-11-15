@@ -15,7 +15,7 @@ A GUI program for plotting minimal energy path on potential energy (or free ener
 
 Double click the binary file MEPplot.exe file. The following interface will be showed. Please follow the instruction step by step.
 
-![R2](.\Readme-figures\R2.png)
+<img src=".\Readme-figures\R2.png" alt="R2"  />
 
 #### 1. Prepare potential energy surface (PES) data file
 
@@ -40,7 +40,7 @@ Templates can also be found in example folder.
 
 Click `Open...` button at up-right corner and select your PES data file. The PES will be showed in `plot window` immediately. The auto-generated plot may not be perfect to locate minima and saddle points. The users need adjust the relevant parameters in `PES plot control` panel. 
 
-![R3](.\Readme-figures\R3.png)
+<img src=".\Readme-figures\R3.png" alt="R3"  />
 
 * **Max. V**: Maximum value. Values larger than *Max. V* will be screened out. 
 * **Min. V **: Minimum  value. Values smaller than *Max. V* will be screened out. (Don't adjust it usless you know what are you doing!)
@@ -57,15 +57,15 @@ Firstly, users need provide a initial guess string. An accurate initial guess st
 
 
 
-![R4](.\Readme-figures\R4.png)
+<img src=".\Readme-figures\R4.png" alt="R4"  />
 
 In this example, 4 beads are provided sequently to define a initial string. The initial guess string is then plotted on PES in black solid line. 
 
-![R5](.\Readme-figures\R5.png)
+<img src=".\Readme-figures\R5.png" alt="R5"  />
 
 The program provides defaulf values for the optimization parameters. You can use them directly. If converge fail, you can adjust the parameters for the optimization. 
 
-![R6](.\Readme-figures\R6.png)
+<img src=".\Readme-figures\R6.png" alt="R6"  />
 
 * **No. of Beads**: Number of beads. It defines the the number of beads of the string. More beads more accuracy. 
 * **Max. iter**: Maximum iteration number. If the optimization steps exceed the *Max. iter* value, the process will stop. 
@@ -81,7 +81,7 @@ Click `Run` button. The optimization process will start. Then, the initial guess
 
 Finally, click `Show` button in `MEP searching` panel. You will see the final results. 
 
- ![R7](.\Readme-figures\R7.png)
+ <img src=".\Readme-figures\R7.png" alt="R7"  />
 
 Click `Export data` button, the beads' coordinates and relevant energies of MEP can be exported in a file for further use. 
 
