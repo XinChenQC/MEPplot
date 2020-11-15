@@ -15,7 +15,7 @@ A GUI program for plotting minimal energy path on potential energy (or free ener
 
 Double click the binary file MEPplot.exe file. The following interface will be showed. Please follow the instruction step by step.
 
-![R2](C:\Users\gaojl\Documents\GitHub\MEPplot\Readme-figures\R2.png)
+![R2](.\Readme-figures\R2.png)
 
 #### 1. Prepare potential energy surface (PES) data file
 
