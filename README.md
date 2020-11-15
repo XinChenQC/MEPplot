@@ -99,7 +99,7 @@ Click `Export data` button, the beads' coordinates and relevant energies of MEP 
 ## License
 
 MEPplot: A GUI program for plotting Minimal energy path on potential energy surface. 
-Copyright (C)  2020 Xin Chen and Weizhi Liu
+Copyright (C)  2020 Xin Chen
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
