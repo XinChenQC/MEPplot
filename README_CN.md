@@ -7,9 +7,25 @@
 
 一个在势能面（自由能面）上绘制最小能量路径的程序。 本程序基于弦方法(string method)。 更多细节，请参考如下论文 (Phys. Rev. B **66**, 052301 – Published 12 August 2002) 
 
+
+
+
+
 ## 下载与安装
 
+在如下链接里找到 `.rar` 文件：
 
+https://github.com/chenxin199261/MEPplot/releases
+
+对于身处中国大陆的用户 (GitHub非常慢), 请用如下链接下载:
+
+https://mega.nz/folder/hsVzVSKT#3IEzoJZzkmEQZJACTAEcMQ
+
+下载rar文件并解压， 你会得到如下三个文件，
+
+* MEPplot.bat :MEPplot程序的入口, 可执行脚本.
+* example: 势能面模板.
+* main: 程序文件.
 
 ## 用法
 

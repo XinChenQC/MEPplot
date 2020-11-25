@@ -7,13 +7,30 @@
 
 A GUI program for plotting minimal energy path on potential energy (or free energy) surface. This program is based on string method. Please refer to this paper (Phys. Rev. B **66**, 052301 – Published 12 August 2002) for details.
 
+
+
+
 ## Download and  Installation
+
+Find the latest `.rar` file here:
+
+https://github.com/chenxin199261/MEPplot/releases
+
+For users in mainland China (GitHub is slow), please use the following address:
+
+https://mega.nz/folder/hsVzVSKT#3IEzoJZzkmEQZJACTAEcMQ
+
+Download rar file and unzip the file. You will see 3 files.
+
+* MEPplot.bat : Entry of MEPplot, executable file.
+* example: Template PES.
+* main: Program files.
 
 
 
 ## Usage
 
-Double click the binary file `MEPplot.exe`. The following interface will be showed. Please follow the instructions step by step.
+Double click the file `MEPplot.bat`. The following interface will be showed. Please follow the instructions step by step.
 
 <img src=".\Readme-figures\R2.png" alt="R2"  />
 
@@ -93,7 +110,7 @@ Click `Export data` button, the beads' coordinates and relevant energies of MEP 
 
 1. The initial guess beads will be updated to the latest optimized beads after one optimization process. Users can click run directly in the case of convergence failure. You need click `Guess beads` to generated new initial guess.
 2. If the string vibrates, try to reduce the `step size` value.
-3. If the beads on string move slowly,  try to reduce the step size value.
+3. If the beads on string move slowly,  try to increase the `step size` value.
 4. Negative `step size` value yields *maximum energy path*
 
 
