@@ -1,9 +1,11 @@
+
+
 # MEPplot
- [中文](README_CN)  [日本語](README_JP.md)
+ [中文](README_CN.md)  [日本語](README_JP.md)
 
+<a href="https://explosion.ai"><img src=".\ui\Logo.png"  width="225" height="185" align="right" /></a>
 
-
-A GUI program for plotting minimal energy path on potential energy (or free energy) surface. This program is based on string method. Please refer to this paper (Phys. Rev. B **66**, 052301 – Published 12 August 2002)
+A GUI program for plotting minimal energy path on potential energy (or free energy) surface. This program is based on string method. Please refer to this paper (Phys. Rev. B **66**, 052301 – Published 12 August 2002) for details.
 
 ## Download and  Installation
 
@@ -11,7 +13,7 @@ A GUI program for plotting minimal energy path on potential energy (or free ener
 
 ## Usage
 
-Double click the binary file MEPplot.exe file. The following interface will be showed. Please follow the instruction step by step.
+Double click the binary file `MEPplot.exe`. The following interface will be showed. Please follow the instructions step by step.
 
 <img src=".\Readme-figures\R2.png" alt="R2"  />
 
@@ -36,12 +38,12 @@ Templates can also be found in example folder.
 
 #### 2. Load PES data file in and plot 2D PES
 
-Click `Open...` button at up-right corner and select your PES data file. The PES will be showed in `plot window` immediately. The auto-generated plot may not be perfect to locate minima and saddle points. The users need adjust the relevant parameters in `PES plot control` panel. 
+Click `Open...` button at up-right corner and select your PES data file. The PES will be showed in `plot window` immediately. The auto-generated plot may not be perfect for locating minima and saddle points. The users need to adjust the relevant parameters in `PES plot control` panel. 
 
 <img src=".\Readme-figures\R3.png" alt="R3"  />
 
-* **Max. V**: Maximum value. Values larger than *Max. V* will be screened out. 
-* **Min. V**: Minimum  value. Values smaller than *Max. V* will be screened out. (Don't adjust it usless you know what are you doing!)
+* **Max. V**: Maximum value in countour plot. Values larger than *Max. V* will be screened out. 
+* **Min. V**: Minimum  value. Values smaller than *Max. V* will be screened out (Don't adjust it or you will miss the local minimas).
 * **Level**: Number of contour lines plotted on PES. 
 * **Cmap**：Colormap styles.
 
@@ -51,13 +53,13 @@ Click `Regenrate` button you will see the new PES figure. If you mess the plot s
 
 #### 3. Search minimum energy path
 
-Firstly, users need provide a initial guess string. An accurate initial guess string can be optimized to final result fast. The initial guess is defined by beads (at least 2 beads). Click `Guess beads` and provide the coordinates (X and Y) into dialog box,
+Firstly, users need to provide a initial guess string. An accurate initial guess string can be optimized to final result fast. The initial guess is defined by beads (at least 2 beads). Click `Guess beads` and provide the coordinates (X and Y) into dialog box,
 
 
 
 <img src=".\Readme-figures\R4.png" alt="R4"  />
 
-In this example, 4 beads are provided sequently to define a initial string. The initial guess string is then plotted on PES in black solid line. 
+In this example, 4 beads are provided sequently to define a initial string. After clicking `OK`, the initial guess string is then plotted on PES in black solid line. 
 
 <img src=".\Readme-figures\R5.png" alt="R5"  />
 
@@ -89,10 +91,19 @@ Click `Export data` button, the beads' coordinates and relevant energies of MEP 
 
 ## Tips
 
-1. The initial guess beads are updated to the latest optimized beads. Users can click run directly in the case of convergence failure. You can also click `Guess beads` to generated new initial guess.
-2. If the string vibrates, try reduce the `step size` value.
-3. If the beads on string move slowly,  try reduce the step size value.
+1. The initial guess beads will be updated to the latest optimized beads after one optimization process. Users can click run directly in the case of convergence failure. You need click `Guess beads` to generated new initial guess.
+2. If the string vibrates, try to reduce the `step size` value.
+3. If the beads on string move slowly,  try to reduce the step size value.
 4. Negative `step size` value yields *maximum energy path*
+
+
+
+## Dependency
+
+* pyqt5: 5.15
+* Matplotlib: 3.1.3
+* numpy: 1.15
+* scipy:1.5.4
 
 
 

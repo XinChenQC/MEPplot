@@ -25,6 +25,13 @@ import ctypes
 myappid = 'mycompany.myproduct.subproduct.version' # arbitrary string
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
+if hasattr(Qt, 'AA_EnableHighDpiScaling'):
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+
+if hasattr(Qt, 'AA_UseHighDpiPixmaps'):
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+
+
 ## Global PES and MEP variables
 PESdata = 0                # Original PES data provided by User [2D array, 3*N_points]
 MaxValueInit = 1.0         # Maximum value of PES 
@@ -109,7 +116,7 @@ class ResultBox(QWidget):
                 xi,yi,zi,vmax=maxV,vmin=minV,
                 levels=np.linspace(minV,maxV,140),cmap=Cmap)
 
-        self.cb = self.Canvas1.axes.figure.colorbar(mappable=cf,boundaries=np.linspace(minV,maxV,140))
+        self.cb = self.Canvas1.axes.figure.colorbar(mappable=cf)
         beads_tx, beads_ty = trans_back(beads[:,0],beads[:,1],regul_scale)
         self.Canvas1.axes.plot(beads_tx, beads_ty,'-',color='r',lw=1.8)
         self.Canvas1.draw()
@@ -142,7 +149,7 @@ class ResultBox(QWidget):
 class AboutBox(QWidget):
     def __init__(self):
         global xi,yi,zi,nbeads
-        super(AboutBox,self).__init__()       
+        super(AboutBox,self).__init__()
         loadUi("ui/about.ui",self) 
 
 class NavigationToolbarCus(NavigationToolbar):
@@ -218,7 +225,7 @@ class MainWindow(QWidget):
 
     def readFile(self):
         global PESdata,MaxValueInit,MinValueInit
-        fileName = QFileDialog.getOpenFileName(self, "Read PES", "./","File (*.dat *.txt)")
+        fileName = QFileDialog.getOpenFileName(self, "Read PES", "../","File (*.dat *.txt)")
         if (len(fileName[0]) == 0): return
         self.outBrowser.append("Potential energy surface file selected:   "+fileName[0])
 
@@ -299,7 +306,7 @@ class MainWindow(QWidget):
                 xi,yi,zi,vmax=maxV,vmin=minV,
                 levels=np.linspace(minV,maxV,140),cmap=Cmap)
 
-        self.cb = self.Canvas.axes.figure.colorbar(mappable=cf,boundaries=np.linspace(minV,maxV,140))
+        self.cb = self.Canvas.axes.figure.colorbar(mappable=cf)
         self.Canvas.draw()
 
     # Plot Guess dot on Canvas
@@ -341,8 +348,27 @@ class MainWindow(QWidget):
         self.aboutb.show()
 
     def plotReset(self):
+        global PESdata,MaxValueInit,MinValueInit,xi,yi,zi
+        if (type(PESdata) is int):
+            return
+        self.cb.remove()
         self.Canvas.axes.clear()
-        #self.cb.remove() 
+        self.Canvas.draw()
+
+        self.Vmax.setText(str(round(MaxValueInit,3)))
+        self.Vmin.setText(str(round(MinValueInit,3)))
+        self.Level.setText(str(12))
+        #self.cb.remove()
+        Cmap = self.cmap.currentText()
+        self.Canvas.axes.contour(
+                xi,yi,zi,vmax=MaxValueInit,vmin=MinValueInit,
+                linewidths=0.5,colors='k',levels=np.linspace(MinValueInit,MaxValueInit,12))
+
+        cf = self.Canvas.axes.contourf(
+                xi,yi,zi,vmax=MaxValueInit,vmin=MinValueInit,
+                levels=np.linspace(MinValueInit,MaxValueInit,140),cmap=Cmap)
+
+        self.cb = self.Canvas.axes.figure.colorbar(mappable=cf)
         self.Canvas.draw()
 
     def runMEPsearch(self):
@@ -435,8 +461,10 @@ class MainWindow(QWidget):
 
         
         ## RecoverData
-
-app = QApplication(sys.argv)
-demo1 = MainWindow()
-demo1.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    demo1 = MainWindow()
+    demo1.show()
+    sys.exit(app.exec_())
+    time.sleep(50)
+    input("Press enter to end!")
