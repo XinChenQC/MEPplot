@@ -23,7 +23,7 @@ https://mega.nz/folder/hsVzVSKT#3IEzoJZzkmEQZJACTAEcMQ
 
 对于身处中国大陆的用户 (GitHub非常慢), 请用如下链接下载:
 
-https://n459.com/file/30374101-473325811
+https://n459.com/file/30374101-473325811  （提取码;111111）
 
 下载rar文件并解压， 你会得到如下三个文件，
 

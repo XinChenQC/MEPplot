@@ -13,7 +13,7 @@ https://github.com/chenxin199261/MEPplot/releases
 
 中国本土のユーザー向け (GitHub非常に遅い), ダウンロードするには、次のリンクを使用してください:
 
-https://mega.nz/folder/hsVzVSKT#3IEzoJZzkmEQZJACTAEcMQ
+https://n459.com/file/30374101-473325811 （passwd:111111）
 
 ダウンロードrarファイルと解凍， 次の3つのファイルを取得します，
 
