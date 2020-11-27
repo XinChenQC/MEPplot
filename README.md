@@ -16,9 +16,13 @@ Find the latest `.rar` file here:
 
 https://github.com/chenxin199261/MEPplot/releases
 
-For users in mainland China (GitHub is slow), please use the following address:
+or
 
 https://mega.nz/folder/hsVzVSKT#3IEzoJZzkmEQZJACTAEcMQ
+
+For users in mainland China (GitHub is slow), please use the following address:
+
+https://n459.com/file/30374101-473325811
 
 Download rar file and unzip the file. You will see 3 files.
 

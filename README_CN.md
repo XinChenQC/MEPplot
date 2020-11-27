@@ -1,7 +1,7 @@
 
 
 # MEPplot
- [中文](README_CN.md)  [日本語](README_JP.md)
+ [English](README_CN.md)  [日本語](README_JP.md)
 
 <a href="https://explosion.ai"><img src=".\ui\Logo.png"  width="225" height="185" align="right" /></a>
 
@@ -17,9 +17,13 @@
 
 https://github.com/chenxin199261/MEPplot/releases
 
-对于身处中国大陆的用户 (GitHub非常慢), 请用如下链接下载:
+或者
 
 https://mega.nz/folder/hsVzVSKT#3IEzoJZzkmEQZJACTAEcMQ
+
+对于身处中国大陆的用户 (GitHub非常慢), 请用如下链接下载:
+
+https://n459.com/file/30374101-473325811
 
 下载rar文件并解压， 你会得到如下三个文件，
 
