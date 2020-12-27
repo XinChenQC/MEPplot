@@ -64,7 +64,7 @@ Click `Open...` button at up-right corner and select your PES data file. The PES
 <img src=".\Readme-figures\R3.png" alt="R3"  />
 
 * **Max. V**: Maximum value in countour plot. Values larger than *Max. V* will be screened out. 
-* **Min. V**: Minimum  value. Values smaller than *Max. V* will be screened out (Don't adjust it or you will miss the local minimas).
+* **Min. V**: Minimum  value. Values smaller than *Mix. V* will be screened out (Don't adjust it or you will miss the local minimas).
 * **Level**: Number of contour lines plotted on PES. 
 * **Cmap**：Colormap styles.
 
