@@ -1,7 +1,7 @@
 # MEPplot
  [English](README.md)  [中文](README_CN.md)
 
-<a href="https://explosion.ai"><img src="C:/Users/gaojl/Documents/GitHub/MEPplot/ui/Logo.png"  width="225" height="185" align="right" /></a>
+<a href="https://explosion.ai"><img src="./ui/Logo.png"  width="225" height="185" align="right" /></a>
 
 潜在的なエネルギー面（自由エネルギー面）に最小エネルギーの経路を描くプログラム。 このプログラムはstring法に基づいています(string method)。 詳細については、以下の論文を参照してください。 (Phys. Rev. B **66**, 052301 – Published 12 August 2002) 
 
@@ -25,7 +25,7 @@ https://n459.com/file/30374101-473325811 （passwd:111111）
 
 スクリプトファイルをクリックします `MEPplot.bat`。 次のインターフェイスが表示されます。ガイドに従ってステップバイステップで描画を完了してください。
 
-<img src="C:/Users/gaojl/Documents/GitHub/MEPplot/Readme-figures/R2.png" alt="R2"  />
+<img src="C:./Readme-figures/R2.png" alt="R2"  />
 
 #### 1.潜在的なエネルギー表面データファイルを準備します
 
@@ -48,7 +48,7 @@ https://n459.com/file/30374101-473325811 （passwd:111111）
 
 クリック `Open...` 右上隅のボタン PESデータファイルを選択します. PESはで表示されます `plot window` すぐに. 自動生成されたプロットは、最小点と鞍点を見つけるのに完全ではない場合があります. ユーザーは、関連するパラメータを調整する必要があります `PES plot control` パネル. 
 
-<img src="C:/Users/gaojl/Documents/GitHub/MEPplot/Readme-figures/R3.png" alt="R3"  />
+<img src="./Readme-figures/R3.png" alt="R3"  />
 
 * **Max. V**: カウントプロットの最大値. より大きい値 *Max. V* 選別されます. 
 * **Min. V**: 最小値. より小さい値 *Min. V* 選別されます (調整しないでください。調整しないと、ローカルミニマを見逃してしまいます).
@@ -65,15 +65,15 @@ https://n459.com/file/30374101-473325811 （passwd:111111）
 
 
 
-<img src="C:/Users/gaojl/Documents/GitHub/MEPplot/Readme-figures/R4.png" alt="R4"  />
+<img src="./Readme-figures/R4.png" alt="R4"  />
 
 この例では、最初のストリングを定義するために4つのビーズが連続して提供されています。 「OK」をクリックすると、最初の推測文字列がPESに黒い実線でプロットされます。
 
-<img src="C:/Users/gaojl/Documents/GitHub/MEPplot/Readme-figures/R5.png" alt="R5"  />
+<img src="./Readme-figures/R5.png" alt="R5"  />
 
 プログラムは、最適化パラメーターのデフォルト値を提供します。直接使用できます。収束に失敗した場合は、最適化のためにパラメーターを調整できます。 
 
-<img src="C:/Users/gaojl/Documents/GitHub/MEPplot/Readme-figures/R6.png" alt="R6"  />
+<img src="./Readme-figures/R6.png" alt="R6"  />
 
 * **No. of Beads**: ビーズの数。文字列のビーズの数を定義します。より多くのビーズより多くの精度。 
 * **Max. iter**: 最大反復回数。最適化ステップが。 最大反復回数。最適化ステップが Maxを超える場合。 iter 値の場合、プロセスは停止します。
@@ -89,7 +89,7 @@ https://n459.com/file/30374101-473325811 （passwd:111111）
 
 最終的に、クリック `Show` ボタン に `MEP searching` パネル。最終結果が表示されます。 
 
- <img src="C:/Users/gaojl/Documents/GitHub/MEPplot/Readme-figures/R7.png" alt="R7"  />
+ <img src="./Readme-figures/R7.png" alt="R7"  />
 
 クリック`Export data` ボタン、 ビーズの座標とMEPの関連エネルギーは、さらに使用するためにファイルにエクスポートできます。
 
