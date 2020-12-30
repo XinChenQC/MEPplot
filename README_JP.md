@@ -25,7 +25,7 @@ https://n459.com/file/30374101-473325811 （passwd:111111）
 
 スクリプトファイルをクリックします `MEPplot.bat`。 次のインターフェイスが表示されます。ガイドに従ってステップバイステップで描画を完了してください。
 
-<img src="C:./Readme-figures/R2.png" alt="R2"  />
+<img src="./Readme-figures/R2.png" alt="R2"  />
 
 #### 1.潜在的なエネルギー表面データファイルを準備します
 
