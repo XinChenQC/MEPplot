@@ -1,7 +1,7 @@
 
 
 # MEPplot
- [English](README_CN.md)  [日本語](README_JP.md)
+ [English](README.md)  [日本語](README_JP.md)
 
 <a href="https://explosion.ai"><img src=".\ui\Logo.png"  width="225" height="185" align="right" /></a>
 
